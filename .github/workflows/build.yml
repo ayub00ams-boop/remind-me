@@ -12,35 +12,28 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Show environment
+    - name: Install Flutter
       run: |
-        echo "Starting build..."
-        pwd
-        ls -la
-        
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.24.0'
-        
-    - name: Show Flutter
-      run: |
+        git clone https://github.com/flutter/flutter.git --depth 1 /opt/flutter
+        export PATH="/opt/flutter/bin:$PATH"
         flutter --version
-        flutter doctor
         
     - name: Get dependencies
-      run: flutter pub get
-      
+      run: |
+        export PATH="/opt/flutter/bin:$PATH"
+        flutter config --no-analytics
+        flutter pub get
+        
     - name: Build APK
-      run: flutter build apk --debug
-      
-    - name: Show output
-      run: ls -la build/app/outputs/flutter-apk/
-      
-    - name: Upload to release
+      run: |
+        export PATH="/opt/flutter/bin:$PATH"
+        flutter build apk --debug
+        
+    - name: Create Release
+      if: github.event_name == 'push'
       uses: softprops/action-gh-release@v1
       with:
         files: build/app/outputs/flutter-apk/app-debug.apk
-        body: "Debug APK"
+        body: "Built from main branch"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
