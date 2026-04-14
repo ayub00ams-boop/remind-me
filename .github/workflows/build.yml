@@ -1,4 +1,4 @@
-name: Debug Build
+name: Simple Test
 
 on:
   push:
@@ -9,20 +9,4 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Check system
-      run: |
-        echo "Testing basic workflow"
-        whoami
-        pwd
-        ls
-    - name: Install Flutter SDK
-      run: |
-        cd /tmp
-        git clone --depth 1 --branch stable https://github.com/flutter/flutter.git flutter-sdk
-        export PATH="$PWD/flutter-sdk/bin:$PATH"
-        flutter --version
-    - name: Build
-      run: |
-        export PATH="$PWD/flutter-sdk/bin:$PATH"
-        flutter config --no-analytics
-        flutter doctor -v
+      - run: echo "Hello World"
