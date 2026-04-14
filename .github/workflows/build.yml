@@ -1,4 +1,4 @@
-name: Build APK
+name: Build
 
 on:
   push:
@@ -8,23 +8,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      statuses: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        
-      - name: Flutter action
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: stable
-          
-      - name: Get deps
-        run: flutter pub get
-        
-      - name: Build
-        run: flutter build apk --debug
-        
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+          flutter-version: '3.24.0'
+      - run: flutter pub get
+      - run: flutter build apk --debug
+      - uses: actions/upload-artifact@v4
         with:
-          name: apk
+          name: app.apk
           path: build/app/outputs/flutter-apk/app-debug.apk
+      - uses: softprops/action-gh-release@v1
+        if: github.event_name == 'push'
+        with:
+          files: build/app/outputs/flutter-apk/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
