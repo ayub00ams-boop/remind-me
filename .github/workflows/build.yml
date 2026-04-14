@@ -1,4 +1,4 @@
-name: Build APK
+name: Debug Build
 
 on:
   push:
@@ -6,34 +6,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Install Flutter
+    - name: Check system
       run: |
-        git clone https://github.com/flutter/flutter.git --depth 1 /opt/flutter
-        export PATH="/opt/flutter/bin:$PATH"
+        echo "Testing basic workflow"
+        whoami
+        pwd
+        ls
+    - name: Install Flutter SDK
+      run: |
+        cd /tmp
+        git clone --depth 1 --branch stable https://github.com/flutter/flutter.git flutter-sdk
+        export PATH="$PWD/flutter-sdk/bin:$PATH"
         flutter --version
-        
-    - name: Get dependencies
+    - name: Build
       run: |
-        export PATH="/opt/flutter/bin:$PATH"
+        export PATH="$PWD/flutter-sdk/bin:$PATH"
         flutter config --no-analytics
-        flutter pub get
-        
-    - name: Build APK
-      run: |
-        export PATH="/opt/flutter/bin:$PATH"
-        flutter build apk --debug
-        
-    - name: Create Release
-      if: github.event_name == 'push'
-      uses: softprops/action-gh-release@v1
-      with:
-        files: build/app/outputs/flutter-apk/app-debug.apk
-        body: "Built from main branch"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        flutter doctor -v
