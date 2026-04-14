@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pages: write
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -21,16 +20,15 @@ jobs:
         flutter-version: '3.24.0'
         
     - name: Get dependencies
-      run: flutter pub get
-      
-    - name: Analyze code
-      run: flutter analyze || true
+      run: flutter pub get --no-precompile
       
     - name: Build debug APK
-      run: flutter build apk --debug
+      run: flutter build apk --debug --no-pub
       
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
+    - name: Upload to release
+      uses: softprops/action-gh-release@v1
       with:
-        name: remind-me-debug.apk
-        path: build/app/outputs/flutter-apk/app-debug.apk
+        files: build/app/outputs/flutter-apk/app-debug.apk
+        body: "Debug APK built from commit"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
