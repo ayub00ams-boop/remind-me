@@ -1,0 +1,97 @@
+{
+  "@@locale": "en",
+  "appTitle": "Remind Me",
+  "@appTitle": {
+    "description": "Application title"
+  },
+  "subtitle": "NATURAL LANGUAGE REMINDER",
+  "@subtitle": {
+    "description": "Subtitle text"
+  },
+  "setReminder": "Set Reminder",
+  "@setReminder": {
+    "description": "Button text to set reminder"
+  },
+  "enableNotification": "Enable Notification",
+  "@enableNotification": {
+    "description": "Button text to enable notifications"
+  },
+  "noReminders": "No active reminders",
+  "@noReminders": {
+    "description": "Empty state message"
+  },
+  "active": "active",
+  "@active": {
+    "description": "Label for active reminders count"
+  },
+  "reminderSet": "Reminder set!",
+  "@reminderSet": {
+    "description": "Success message when reminder is set"
+  },
+  "parseError": "Could not understand. Try: 5 মিনিট পর or 10:10 এ",
+  "@parseError": {
+    "description": "Error message when parsing fails"
+  },
+  "exampleHint": "e.g. Remind me in 5 minutes to join meeting",
+  "@exampleHint": {
+    "description": "Hint text for command input"
+  },
+  "reminderAt": "Reminder at {time}",
+  "@reminderAt": {
+    "description": "Title for absolute time reminder",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderAfter": "Reminder after {minutes} minutes",
+  "@reminderAfter": {
+    "description": "Title for relative time reminder",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings page title"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language setting label"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Dark mode setting label"
+  },
+  "parserOutput": "Parser Output",
+  "@parserOutput": {
+    "description": "Label for parser output"
+  },
+  "localParser": "Local Parser",
+  "@localParser": {
+    "description": "Label indicating local parser is used"
+  },
+  "geminiParser": "Gemini Parser",
+  "@geminiParser": {
+    "description": "Label indicating Gemini parser is used"
+  },
+  "geminiKey": "Gemini API Key",
+  "@geminiKey": {
+    "description": "Label for Gemini API key input"
+  },
+  "saveKey": "Save Key",
+  "@saveKey": {
+    "description": "Button to save API key"
+  },
+  "keyHint": "Add key for better command understanding",
+  "@keyHint": {
+    "description": "Hint for API key"
+  }
+}
