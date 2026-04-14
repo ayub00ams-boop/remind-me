@@ -8,27 +8,39 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Show environment
+      run: |
+        echo "Starting build..."
+        pwd
+        ls -la
+        
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.24.0'
         
+    - name: Show Flutter
+      run: |
+        flutter --version
+        flutter doctor
+        
     - name: Get dependencies
-      run: flutter pub get --no-precompile
+      run: flutter pub get
       
-    - name: Build debug APK
-      run: flutter build apk --debug --no-pub
+    - name: Build APK
+      run: flutter build apk --debug
+      
+    - name: Show output
+      run: ls -la build/app/outputs/flutter-apk/
       
     - name: Upload to release
       uses: softprops/action-gh-release@v1
       with:
         files: build/app/outputs/flutter-apk/app-debug.apk
-        body: "Debug APK built from commit"
+        body: "Debug APK"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
